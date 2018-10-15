@@ -1,7 +1,7 @@
 Detailed Flow:
 
 1. Buyer identifies desirable but unaffordable NFT listed for programmatic sale.
-    A. OpenSea provides an API for buying items: https://projectopensea.github.io/opensea-js/#buying-items
+    A. OpenSea provides an API for [buying items](https://projectopensea.github.io/opensea-js/#buying-items): 
 2. Buyer instantiates DebtOrder expressing borrower intent on relayer with following details:
     A. personal ethereum account
     B. principal of 0
@@ -19,4 +19,4 @@ registerTermStart(bytes32 agreementId, address debtor)
 - collateralize NFT
 
 registerRepayment, getExpectedRepaymentValue, getValueRepaidToDate, getTermEndTimestamp 
-as defined by ERC721CollateralizedSimpleInterestTermsContract
+as defined by [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
