@@ -14,16 +14,16 @@
 
 3. A party with access to liquidity can fill the `DebtOrder` and become the creditor for the transaction:
 - creditor funds `customTermsContract` with NFT price in terms of a listed ERC20 token
-- NFT is purchased programatically by customTermsContract
+- NFT is purchased programatically by `customTermsContract`
 - NFT is collateralized using the `ERC721Collateralizer`
 
 ### References
-- The custom terms contract is defined as: `registerTermStart(bytes32 agreementId, address debtor)`
-    - purchase NFT, revert on failure
-    - collateralize NFT
+- The custom terms contract is defined with `registerTermStart(bytes32 agreementId, address debtor)`
+    - purchases NFT, reverts on failure
+    - collateralizes NFT
 
-- `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, `getTermEnd Timestamp` 
-are defined by [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
+- The necessary methods `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, and `getTermEndTimestamp` 
+have been defined in [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
 
 ### Contributors
 - [Yorke Rhodes IV](https://github.com/yorhodes)
