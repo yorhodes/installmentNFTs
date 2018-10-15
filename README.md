@@ -25,6 +25,12 @@
 - The necessary methods `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, and `getTermEndTimestamp` 
 have been defined in [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
 
+### Interfaces:
+
+The borrower interface for browsing NFTs and instantiating intent to borrow could very easily be implemented as a wrapper around the [OpenSea marketplace](https://opensea.io/assets). Initially, though, we will build a very simple interface for instantiating `DebtOrder`s using our `customTermsContract` and inputting relevant parameters.
+
+The lendor interface for browsing `DebtOrder`s and filling them by funding the upfront purchase of the target NFT could look much like [Bloqboard](https://app.bloqboard.com/), or integrate directly with their [API](https://bloqboard.com/api). 
+
 ### Contributors
 - [Yorke Rhodes IV](https://github.com/yorhodes)
 - [Achal Srinivasan](https://github.com/achalvs)
