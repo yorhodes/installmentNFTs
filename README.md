@@ -6,11 +6,11 @@
 - Can integrate with OpenSea API for [buying cryptocollectibles](https://projectopensea.github.io/opensea-js/#buying-items).
 
 2. Buyer instantiates `DebtOrder` expressing intent to borrow on relayer with following details:
-- personal wallet address (source of funding)
+- personal wallet address (source of repayment)
 - `principal = 0`
 - address of `customTermsContract` template
 - `customTermsContract` params (including programmatic purchase details)
-- fees to relayer & underwriter (if an underwriter exists, they are likely responsible for appraising the cryptocollectible)
+- fees to relayer (no underwriter, since the NFT is fully collateralized)
 
 3. A party with access to liquidity can fill the `DebtOrder` and become the creditor for the transaction:
 - creditor funds `customTermsContract` with NFT price in terms of a listed ERC20 token
@@ -22,7 +22,7 @@
     - purchase NFT, revert on failure
     - collateralize NFT
 
-- `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, `getTermEndTimestamp` 
+- `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, `getTermEnd Timestamp` 
 are defined by [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
 
 ### Contributors
