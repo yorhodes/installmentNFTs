@@ -2,7 +2,7 @@
 
 ### Detailed Flow Diagram:
 
---insert image here--
+![](https://i.imgur.com/6A3eLVg.png)
 
 ### Flow Narration: 
 1. Buyer identifies a desirable NFT listed for sale.
