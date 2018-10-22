@@ -1,31 +1,76 @@
 ## NFT Installments on [Dharma](https://dharma.io)
 
-### Detailed Flow:
+### Detailed Flow Diagram:
 
+--insert image here--
+
+### Flow Narration: 
 1. Buyer identifies a desirable NFT listed for sale.
-- Can integrate with OpenSea API for [buying cryptocollectibles](https://projectopensea.github.io/opensea-js/#buying-items).
 
-2. Buyer instantiates `DebtOrder` expressing intent to borrow on relayer with following details:
-- personal wallet address (source of repayment)
+2. Buyer has an intent to borrow, and becomes a debtor in the context of Dharma. 
+
+3. Buyer (debtor) signs `customDebtOrder` and instantiates on relayer.
+
+4. Lendor with liquidity identifies a desirable `customDebtOrder` listed for investment.
+
+5. Lendor instantiates a `customProxy` and provides it with funding for NFT purchase as specified in `customDebtOrder`.
+
+6. `customProxy` signs and fills `customDebtOrder`, becoming a creditor in the context of Dharma.
+
+7. Dharma [DebtKernel](https://github.com/dharmaprotocol/charta/blob/master/contracts/DebtKernel.sol) initializes loan upon fill by invoking relevant `registerTermStart`.
+
+8. `customProxy` purchases NFT and receives [DebtToken](https://developer.dharma.io/primers/debt-tokens) upon loan init, forwarding NFT to be collateralized and DebtToken to lendor.
+
+9. Dharma DebtKernel manages life cycle of loan using terms specified in `customDebtOrder`. 
+
+## References
+
+### `customDebtOrder`
+
 - `principal = 0`
+- `fees = 0` (no underwriter since the NFT is fully collateralized, relayer free)
 - address of `customTermsContract` template
-- `customTermsContract` params (including programmatic purchase details)
-- fees to relayer (no underwriter, since the NFT is fully collateralized)
+- params for `customTermsContract`:
+    - NFT `sale address`
+    - NFT `price`
+    - `interest rate`
+    - `duration`
 
-3. A party with access to liquidity can fill the `DebtOrder` and become the creditor for the transaction:
-- creditor funds `customTermsContract` with NFT price in terms of a listed ERC20 token
-- NFT is purchased programatically by `customTermsContract`
-- NFT is collateralized using the `ERC721Collateralizer`
+### `customTermsContract`
 
-### References
-- The custom terms contract is defined with `registerTermStart(bytes32 agreementId, address debtor)`
-    - purchases NFT, reverts on failure
-    - collateralizes NFT
+- `registerTermStart`
+    - invokes creditor `purchaseNFT`
+    - retrieves NFT from creditor
+    - collateralizes NFT using `customERC721Collateralizer`
+    - reverts on failure
+-  taken from [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol):
+    - `registerRepayment`
+    - `getExpectedRepaymentValue`
+    - `getValueRepaidToDate`
+    - `getTermEndTimestamp` 
 
-- The necessary methods `registerRepayment`, `getExpectedRepaymentValue`, `getValueRepaidToDate`, and `getTermEndTimestamp` 
-have been well defined for our use case in [ERC721CollateralizedSimpleInterestTermsContract](https://github.com/dharmaprotocol/charta/blob/master/contracts/examples/ERC721CollateralizedSimpleInterestTermsContract.sol)
+### `customERC721Collateralizer`
 
-### Interfaces:
+- `collateralize`
+    - transfer NFT from creditor instead of debtor
+- taken from [ERC721Collateralizer](https://github.com/dharmaprotocol/charta/blob/master/contracts/ERC721Collateralizer.sol):
+    - `seizeCollateral`
+    - `returnCollateral`
+
+### `customProxy`
+
+- `constructor`
+    - gives proxy funding from Lendor
+    - sets `owner` to Lendor
+- `purchaseNFT`
+    - purchases NFT with funding
+    - reverts on failure
+- `retrieveDebtToken`
+    - allows `owner` to extract DebtToken from proxy after loan init
+- `retrieveCollateral`
+    - allows `owner` to extract NFT from proxy after loan default
+
+### UI Interfaces:
 
 The borrower interface for browsing NFTs and instantiating intent to borrow could very easily be implemented as a wrapper around the [OpenSea marketplace](https://opensea.io/assets). Initially, though, we will build a very simple interface for instantiating `DebtOrder`s using our `customTermsContract` and inputting relevant parameters, to be listed on our relayer/lendor interface.
 
