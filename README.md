@@ -2,7 +2,7 @@
 
 ### Detailed Flow Diagram:
 
-![](https://i.imgur.com/6A3eLVg.png)
+![](https://i.imgur.com/Oxm4z4u.png)
 
 ### Flow Narration: 
 1. Buyer identifies a desirable NFT listed for sale.
@@ -21,7 +21,7 @@
 
 8. `customProxy` purchases NFT and receives [DebtToken](https://developer.dharma.io/primers/debt-tokens) upon loan init, forwarding NFT to be collateralized and DebtToken to lendor.
 
-9. Dharma DebtKernel manages life cycle of loan using terms specified in `customDebtOrder`. 
+9. Dharma `DebtKernel` manages life cycle of loan using terms specified in `customDebtOrder`. 
 
 ## References
 
