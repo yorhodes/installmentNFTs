@@ -1,0 +1,3 @@
+[submodule "charta"]
+	path = charta
+	url = git@github.com:dharmaprotocol/charta.git
