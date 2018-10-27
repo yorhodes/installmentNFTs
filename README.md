@@ -70,7 +70,7 @@
 - `retrieveCollateral`
     - allows `owner` to extract NFT from proxy after loan default
 
-### UI Interfaces:
+### Possible Interfaces:
 
 The borrower interface for browsing NFTs and instantiating intent to borrow could very easily be implemented as a wrapper around the [OpenSea marketplace](https://opensea.io/assets). Initially, though, we will build a very simple interface for instantiating `DebtOrder`s using our `customTermsContract` and inputting relevant parameters, to be listed on our relayer/lendor interface.
 
